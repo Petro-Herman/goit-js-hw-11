@@ -52,3 +52,11 @@ html {
 .btn:hover {
   background: #6c8cff;
 }
+
+/* .gallery-css {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 24px;
+  width: calc((100% - 48px) / 2);
+} */
