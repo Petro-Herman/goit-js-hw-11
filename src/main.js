@@ -1,65 +1,43 @@
-// import iziToast from 'izitoast';
-// import 'izitoast/dist/css/iziToast.min.css';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
+import { fetchImages } from './js/pixabay-api.js';
+import {
+  clearGallery,
+  renderImages,
+  showNoResultsMessage,
+  showLoadingIndicator,
+  hideLoadingIndicator,
+} from './js/render-functions.js';
 
-// document.querySelector('.js-btn').addEventListener('click', function (event) {
-//   const searchInput = document.querySelector('.js-input').value.trim();
-//   if (!searchInput) {
-//     event.preventDefault();
-//     alert(
-//       'Sorry, there are no images matching your search query. Please try again!'
-//     );
-//   }
-// });
+const form = document.querySelector('#search-form');
+const input = form.querySelector('input');
 
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
 
+  const query = input.value.trim();
+  if (!query) {
+    return;
+  }
 
+  clearGallery();
+  showLoadingIndicator();
 
-// ========================================================================================
-
-
-// import { fetchImages } from './pixabay-api.js';
-// import { renderImages, showError } from './render-functions.js';
-
-// document.addEventListener('DOMContentLoaded', () => {
-//   const form = document.querySelector('#search-form');
-//   const input = form.querySelector('input[name="searchQuery"]');
-
-//   form.addEventListener('submit', async event => {
-//     event.preventDefault();
-
-//     const query = input.value.trim();
-//     if (!query) {
-//       showError('Please enter a search term.');
-//       return;
-//     }
-
-//     try {
-//       const data = await fetchImages(query);
-//       if (data.hits.length === 0) {
-//         showError(
-//           'Sorry, there are no images matching your search query. Please try again!'
-//         );
-//         return;
-//       }
-//       renderImages(data.hits);
-//     } catch (error) {
-//       showError(
-//         'An error occurred while fetching images. Please try again later.'
-//       );
-//     }
-//   });
-// });
-
-
-
-
-
-
-
-// =====================================================================
-
-import { render } from "./js/render-functions"
-import { pix } from "./js/pixabay-api"
-
-console.log(render + pix);
+  try {
+    const data = await fetchImages(query);
+    if (data.hits.length === 0) {
+      showNoResultsMessage();
+    } else {
+      renderImages(data.hits);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    iziToast.error({
+      title: 'Error',
+      message: 'Something went wrong. Please try again later.',
+    });
+  } finally {
+    hideLoadingIndicator();
+  }
+});
