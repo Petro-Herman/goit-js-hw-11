@@ -25,12 +25,12 @@ export function renderImages(images) {
       }) => {
         return `
       <a class="gallery-item" href="${largeImageURL}">
-        <img src="${webformatURL}" alt="${tags}" loading="lazy"/>
-        <div class="info">
-          <p class="info-item"><b>Likes:</b> ${likes}</p>
-          <p class="info-item"><b>Views:</b> ${views}</p>
-          <p class="info-item"><b>Comments:</b> ${comments}</p>
-          <p class="info-item"><b>Downloads:</b> ${downloads}</p>
+        <img src="${webformatURL}" alt="${tags}" loading="lazy" width="360px" height="252px"/>
+        <div class="info info-wrap">
+          <p class="info-item info-item-css"><b>Likes:</b> ${likes}</p>
+          <p class="info-item info-item-css"><b>Views:</b> ${views}</p>
+          <p class="info-item info-item-css"><b>Comments:</b> ${comments}</p>
+          <p class="info-item info-item-css"><b>Downloads:</b> ${downloads}</p>
         </div>
       </a>
     `;
